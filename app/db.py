@@ -10,7 +10,7 @@ settings = config.get_settings()
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 
 CONNECT_BUNDLE = BASE_DIR / 'unencrypted' / 'secure-connect-video-management-project.zip'
-with open(BASE_DIR / 'unencrypted' / 'mahindraaastha1716@gmail.com-token.json') as f:
+with open(BASE_DIR / 'unencrypted' / 'token.json') as f:
     secrets = json.load(f)
 
 CLIENT_ID = secrets["clientId"]
