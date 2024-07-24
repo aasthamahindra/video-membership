@@ -4,10 +4,13 @@ from contextlib import asynccontextmanager
 from .users.models import User
 from . import db
 
+DB_SESSION = None
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # triggers when FastAPI starts [@app.on_event deprecated]
-    db.get_session()
+    global DB_SESSION
+    DB_SESSION = db.get_session()
     sync_table(User)
     yield
 
