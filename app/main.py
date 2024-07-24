@@ -19,3 +19,13 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 def homepage():
     return {"hello": "world"}
+
+@app.get("/users")
+def users_list_view():
+    query = User.objects.all().limit(10)
+    return list(query)
+
+@app.post("/create-user")
+def create_user(email: str, password: str):
+    query = User.create_user(email, password)
+    return query
