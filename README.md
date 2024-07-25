@@ -1,6 +1,6 @@
-# video-membership
+# Video Membership
 
-Run server
+### Run server
 ```
   uvicorn app.main:app --reload
 ```
