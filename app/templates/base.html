@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Vault</title>
+    <title>{% block title %} Video Vault {% endblock %}</title>
 </head>
 <body>
-    
+    {% include 'snippets/nav.html' %}
+    {% block content %}
+    <h1> Hello World </h1>
+    {% endblock %}
 </body>
 </html>
