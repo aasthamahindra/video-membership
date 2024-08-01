@@ -1,5 +1,5 @@
 import pathlib
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from cassandra.cqlengine.management import sync_table
 from contextlib import asynccontextmanager
@@ -32,6 +32,34 @@ def homepage(request: Request):
         "user": "Aastha"
     }
     return templates.TemplateResponse("home.html", context=context)
+
+@app.get("/sign-in", response_class=HTMLResponse)
+def login_get_view(request: Request):
+    context = {
+        "request": request,
+    }
+    return templates.TemplateResponse("auth/signin.html", context=context)
+
+@app.post("/sign-in", response_class=HTMLResponse)
+def login_post_view(request: Request, email: str=Form(...), password: str=Form(...)):
+    context = {
+        "request": request,
+    }
+    return templates.TemplateResponse("auth/signin.html", context=context)
+
+@app.get("/sign-up", response_class=HTMLResponse)
+def signup_get_view(request: Request):
+    context = {
+        "request": request,
+    }
+    return templates.TemplateResponse("auth/signup.html", context=context)
+
+@app.post("/sign-up", response_class=HTMLResponse)
+def signup_post_view(request: Request, email: str=Form(...), password: str=Form(...), password_confirm: str=Form(...)):
+    context = {
+        "request": request,
+    }
+    return templates.TemplateResponse("auth/signup.html", context=context)
 
 @app.get("/users")
 def users_list_view():
