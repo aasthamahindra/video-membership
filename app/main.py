@@ -1,11 +1,14 @@
 import pathlib
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from cassandra.cqlengine.management import sync_table
 from contextlib import asynccontextmanager
+
 from .users.models import User
+from .users.schemas import UserSignUpSchema
 from . import db
-from fastapi.templating import Jinja2Templates
+
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 TEMPLATE_DIR = BASE_DIR / "templates"
@@ -55,7 +58,9 @@ def signup_get_view(request: Request):
     return templates.TemplateResponse("auth/signup.html", context=context)
 
 @app.post("/sign-up", response_class=HTMLResponse)
-def signup_post_view(request: Request, email: str=Form(...), password: str=Form(...), password_confirm: str=Form(...)):
+def signup_post_view(request: Request, username: str=Form(...), email: str=Form(...), password: str=Form(...), password_confirm: str=Form(...)):
+    cleaned_data = UserSignUpSchema(username=username, email=email, password=password, password_confirm=password_confirm)
+    print(cleaned_data.model_dump())
     context = {
         "request": request,
     }
